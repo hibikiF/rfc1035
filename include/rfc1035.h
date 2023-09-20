@@ -9,6 +9,27 @@
 
 #define RR_CLASS_IN 1
 
+
+#define DNS_POINTER_FLAG_VALUE 0xc0
+#define DNS_POINTER_FLAG_MASK (0b11 << 14)
+
+#define QR_MASK 0x8000
+#define OPCODE_MASK 0x7800
+#define AA_MASK 0x7800
+#define TC_MASK 0x0200
+#define RD_MASK 0x0100
+#define RA_MASK 0x0080
+#define R_CODE_MASK 0x000f
+
+#define QR( flags ) (flags & QR_MASK) >> 15
+#define OPCODE( flags ) (flags & OPCODE_MASK) >> 11
+#define AA( flags ) (flags & AA_MASK) >> 10
+#define TC( flags ) (flags & TC_MASK) >> 9
+#define RD( flags ) (flags & RD_MASK) >> 8
+#define RA( flags ) (flags & RA_MASK) >> 7
+// skip Z flag 3bit
+#define R_CODE( flags ) (flags & R_CODE_MASK)
+
 typedef struct {
     uint16_t    ID;
     uint16_t    FLAGS;

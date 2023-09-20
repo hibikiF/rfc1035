@@ -25,8 +25,27 @@ int main() {
     PRFC1035_Response rfc1035_response = (PRFC1035_Response) calloc(1, sizeof(RFC1035_Response));
     recv_rfc1035_response(client_socket, rfc1035_response);
 
+    uint16_t flags = rfc1035_response->header->FLAGS;
+
+    uint8_t qr = QR(flags);
+    uint8_t opcode = OPCODE(flags);
+    uint8_t aa = AA(flags);
+    uint8_t tc = TC(flags);
+    uint8_t rd = RD(flags);
+    uint8_t ra = RA(flags);
+    uint8_t r_code = R_CODE(flags);
+
+    printf("QR: %d\n", qr);
+    printf("OPCODE: %d\n", opcode);
+    printf("AA: %d\n", aa);
+    printf("TC: %d\n", tc);
+    printf("RD: %d\n", rd);
+    printf("RA: %d\n", ra);
+    printf("R_CODE: %d\n", r_code);
+
     for (int i = 0; i < rfc1035_response->header->AN_COUNT; ++i) {
         PRFC1035_Answer answer = rfc1035_response->answers[i];
+
         if (answer->TYPE == RR_TYPE_A && answer->CLASS == RR_CLASS_IN) {
             struct in_addr addr = { 0 };
             addr.s_addr = *((uint32_t*)answer->RD_ATA);

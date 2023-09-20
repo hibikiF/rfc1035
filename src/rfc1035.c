@@ -4,9 +4,6 @@
 #include <unistd.h>
 #include <stdbool.h>
 
-#define DNS_POINTER_FLAG_VALUE 0xc0
-#define DNS_POINTER_FLAG_MASK (0b11 << 14)
-
 size_t name_ascii_to_wire(char *domainName, uint8_t *wireBuf)
 {
     char* namePtr = domainName;
